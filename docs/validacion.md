@@ -9,7 +9,7 @@ Realizada el 18 de octubre de 2026 en Linux, con Python 3, Playwright 1.62.0 y G
 | Integridad | Los 15 scripts de la aplicación original permanecen idénticos. |
 | Controles | Se conservan los 144 controles originales identificados al iniciar, sin identificadores duplicados. |
 | Motor | Misma instantánea de estado y mismo PNG píxel por píxel que el original tras giros, pintura, selección y captura con flecha 3D. |
-| Cámara | Arrastre, escala, frontal, isométrica, referencia de cara, cara superior, reinicio y encuadre de varias caras. |
+| Cámara | Arrastre, escala, frontal, isométrica, referencia de cara, cara superior, reinicio y encuadre de varias caras. Tres cuartos ya no aparece en los accesos rápidos ni en el selector avanzado; inicio y reinicio usan isométrica. Las cámaras antiguas conservan sus coordenadas al cargarlas. |
 | Edición | Pintura, deshacer/rehacer, pegatinas, piezas completas, aislamiento, transparencia y visibilidad global. |
 | Movimiento | Giro preciso e inverso, mezcla físicamente válida, cubo resuelto, captura de 45°, cancelación/finalización y ajustes de flecha 3D. |
 | Estilo | Trazo, grosor, color, divisiones, paletas, colores individuales, opacidad y separación de fondo de ilustración/visor. |

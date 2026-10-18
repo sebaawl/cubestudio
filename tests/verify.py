@@ -113,6 +113,7 @@ def main():
 
         def same_engine():
             operations = '''() => {
+              cancelCameraAnimation();Object.assign(state,{viewAngle:'iso',yaw:-Math.PI/4,pitch:Math.atan(1/Math.sqrt(2)),roll:0});
               setMode('turn'); turn('R');turn('U',true);turn('F');
               setMode('paint');brush=5;editSticker(stickers.find(s=>!isCenterSticker(s)&&s.color!==5));
               setMode('piece');$('visibilityAction').value='hide';editSticker(stickers.find(s=>s.p.every(v=>v!==0)));
@@ -130,6 +131,10 @@ def main():
         def camera():
             with page_at() as page:
                 require(page.locator('#panel-camera').is_visible(), 'Camera panel not selected on startup')
+                require(page.locator('#three').is_hidden(), 'Retired three-quarter button is still visible')
+                require(page.locator('#viewAngle option[value=three]').count()==0, 'Retired view remains in advanced settings')
+                require(page.locator('.quick-views button:visible').count()==2, 'Quick views should contain only isometric and frontal')
+                require(page.evaluate('state.viewAngle===\'iso\'&&Math.abs(state.yaw+Math.PI/4)<.001'), 'Initial camera did not switch to isometric')
                 before = page.evaluate('[state.yaw,state.pitch]')
                 canvas = page.locator('#canvas').bounding_box()
                 page.mouse.move(canvas['x']+30, canvas['y']+70)
@@ -151,11 +156,21 @@ def main():
                 require(page.evaluate('state.cameraTop') == 1, 'Top face failed')
                 page.locator('#canvasFrame').click(); wait_camera(page)
                 require(page.evaluate('state.cameraTop===null && state.zoom===1'), 'Frame reset failed')
+                require(page.evaluate('state.viewAngle===\'iso\''), 'Reset restored a retired view')
                 page.locator('#selectCameraFaces').click()
                 hit(page, 'CubeCheck.face(p.sticker)===2')
                 hit(page, 'CubeCheck.face(p.sticker)===4')
                 page.locator('#checkSelected').click(); wait_camera(page)
                 require(page.evaluate('state.cameraFaces.length') == 2, 'Multi-face framing failed')
+                page.evaluate('''() => {
+                  const legacy=snapshot();legacy.state.viewAngle='three';legacy.state.yaw=.19;
+                  presets.push({name:'Cámara anterior',data:legacy});previewPresetIndex12=presets.length-1;
+                  applyPresetCamera(legacy);renderPresetDetails12();
+                }''')
+                wait_camera(page)
+                require(page.evaluate('state.viewAngle===\'iso\' && Math.abs(state.yaw-.19)<.001'), 'Legacy camera coordinates were lost')
+                require('Tres cuartos' not in page.locator('#presetDetails').text_content(), 'Legacy details advertise the retired view')
+                require(page.evaluate('presets.at(-1).data.state.viewAngle')=='three', 'Loading a legacy camera rewrote its saved data')
         record('Camera drag, zoom, views, face references and multi-face framing', camera)
 
         def painting_visibility():

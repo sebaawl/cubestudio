@@ -262,7 +262,6 @@
     tile: '<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18M15 3v18M3 9h18M3 15h18"/><path d="M9 9h6v6H9Z" fill="currentColor" stroke="none"/>',
     piece: '<path d="m12 2 9 5v10l-9 5-9-5V7ZM3 7l9 5 9-5M12 12v10M7.5 4.5l9 5v10M3 12l9 5 9-5"/>',
     turn: '<path d="M20 7A9 9 0 1 0 21 15M20 2v5h-5"/><path d="M8 9h7v7H8ZM11.5 9v7M8 12.5h7"/>',
-    'view-three':'<path d="m12 3 9 5v10l-9 4-9-5V7ZM3 7l9 5 9-4M12 12v10M7.5 5l9 5M7.5 9.5v10M3 12l9 5 9-4"/>',
     'view-iso':'<path d="m12 2 9 5.2v9.6L12 22l-9-5.2V7.2ZM3 7.2l9 5.2 9-5.2M12 12.4V22M7.5 4.6l9 5.2M7.5 9.8v9.6M3 12l9 5.2 9-5.2"/>',
     'view-flat':'<rect x="3" y="3" width="18" height="18" rx="1"/><path d="M9 3v18M15 3v18M3 9h18M3 15h18"/>',
     'style-simple':'<path d="M4 17 9 7l5 10 6-10M4 21h16"/>',
@@ -313,7 +312,24 @@
     button.replaceChildren(glyph,node('span','tool-name',text),shortcut);
     button.title = text + ' · ' + shortcut.textContent;
   }
-  relabel('three','Tres cuartos','view-three');
+  // Keep the retired node for the original lock manager; it is no longer an action.
+  $('three').hidden=true;$('three').onclick=null;$('three').tabIndex=-1;
+  $('viewAngle').querySelector('option[value="three"]').remove();
+  const wasDefaultCamera=state.yaw===defaults.yaw&&state.pitch===defaults.pitch&&(state.roll||0)===(defaults.roll||0);
+  Object.assign(defaults,{viewAngle:'iso',yaw:-Math.PI/4,pitch:Math.atan(1/Math.sqrt(2)),roll:0});
+  if(wasDefaultCamera)Object.assign(state,{yaw:defaults.yaw,pitch:defaults.pitch,roll:defaults.roll});
+  const previousSync=sync;
+  sync=function(){if(state.viewAngle==='three')state.viewAngle='iso';previousSync();};
+  const previousChooseAngle=chooseAngle;
+  chooseAngle=function(angle){previousChooseAngle(angle==='three'?'iso':angle);};
+  const previousExportName=buildExportName;
+  buildExportName=function(){return previousExportName().replace('_3cuartos_','_libre_');};
+  const previousPresetDetails=renderPresetDetails12;
+  renderPresetDetails12=function(){
+    previousPresetDetails();
+    for(const text of $('presetDetails').querySelectorAll('p'))for(const child of text.childNodes)if(child.nodeType===Node.TEXT_NODE)child.textContent=child.textContent.replace('Tres cuartos','Vista guardada');
+  };
+  sync();
   relabel('iso','Isométrica','view-iso');
   relabel('front','Frontal','view-flat');
   document.querySelector('#panel-camera .panel-heading h2').textContent='Encuadre.';
@@ -462,7 +478,7 @@
       const brightness=[1,3,5].reduce((sum,p,j)=>sum+parseInt(state.colors[i].slice(p,p+2),16)*[.21,.72,.07][j],0);
       button.style.setProperty('--brush-ink',brightness>150?'#252720':'#ffffff');
     }
-    for(const [id,angle]of[['three','three'],['iso','iso'],['front','flat']]){
+    for(const [id,angle]of[['iso','iso'],['front','flat']]){
       const target=state.cameraFaces?.length>1?targetForFaces(state.cameraFaces,angle,state.viewCorner,cameraReferenceUp()):cameraTargetForFace(Number(state.viewFace),angle,state.viewCorner);
       const q=cameraRotation(),expected=cameraRotation(target),matches=Math.abs(q.reduce((sum,v,i)=>sum+v*expected[i],0))>.999999;
       $(id).setAttribute('aria-pressed',String(state.viewAngle===angle&&(!!cameraAnimation||matches)));

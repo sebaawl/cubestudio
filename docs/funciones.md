@@ -5,7 +5,7 @@ Se conservan todos los scripts originales y todos los controles con identificado
 | Grupo | Funciones conservadas | Ubicación |
 | --- | --- | --- |
 | Cámara interactiva | Órbita libre, Alt + arrastrar, Shift + rueda, pellizco táctil, encuadre y transiciones animadas. | Lienzo, barra inferior y Encuadre. |
-| Encuadre | Frontal, tres cuartos, isométrica, elevación suave y dos caras; cara principal, dirección, cara superior automática o fija, selección de una a tres caras adyacentes. | Encuadre. |
+| Encuadre | Frontal, isométrica, elevación suave y dos caras; cara principal, dirección, cara superior automática o fija, selección de una a tres caras adyacentes. | Encuadre. |
 | Referencia de cara | Clic derecho o pulsación prolongada; usar una cara como referencia o como superior; blanco o amarillo arriba; volver a automático. | Menú contextual del lienzo y Encuadre. |
 | Pintar | Seis colores, centros como referencia fija, pintura individual, acceso a las seis vistas, estados pintados y no pintados. | Pintar → Herramienta. |
 | Pegatinas | Mostrar/ocultar, aislar, mostrar y hacer transparente una pegatina. | Pegatinas → Herramienta. |

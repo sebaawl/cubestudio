@@ -1,6 +1,6 @@
 # Cubo Studio · Estudio abierto
 
-Una mesa de trabajo abierta para ilustrar cubos: lienzo sin marco, herramientas independientes, opciones por contraste y tipografía con distintos tamaños y pesos. Conserva el motor, la verificación, el historial, los formatos de biblioteca y todas las funciones de Cubo Studio 1.14.
+Una mesa de trabajo abierta para ilustrar cubos: lienzo sin marco, herramientas independientes, opciones por contraste y tipografía con distintos tamaños y pesos. Conserva el motor, la verificación, el historial, los formatos de biblioteca y las funciones de edición de Cubo Studio 1.14.
 
 ## Descargar
 
@@ -24,7 +24,7 @@ La aplicación sigue guardando la sesión y los presets localmente. Los datos de
 - Los botones independientes de la izquierda son **Orientar**, **Pintar**, **Pegatinas**, **Piezas** y **Girar**, con las teclas 1–5. El contraste oscuro indica la herramienta seleccionada.
 - Los ajustes abiertos de la derecha cambian con la herramienta. Las opciones de estilo, selección, flechas y resolución se eligen con botones específicos.
 - Los valores se pueden escribir o ajustar con **− / +**. Opacidad y escala usan porcentajes; los demás campos muestran sus unidades.
-- En **Encuadre**, las vistas rápidas tienen iconos propios. **Orientación y escala** despliega los detalles de cámara. En **Exportar**, **Recorte y nombre de archivo** reúne los ajustes menos frecuentes.
+- En **Encuadre**, las vistas rápidas **Isométrica** y **Frontal** tienen iconos propios. **Orientación y escala** despliega los detalles de cámara. En **Exportar**, **Recorte y nombre de archivo** reúne los ajustes menos frecuentes.
 - Bajo el lienzo están el historial, la verificación contextual, el encuadre y la escala.
 - **Restablecer**, junto al lienzo, agrupa la herramienta actual, los colores originales y el estudio completo. Los cambios se pueden deshacer.
 - **Entorno** conserva los temas anteriores, los bloqueos, el orden de pestañas, la posición del panel y las ventanas independientes. Se añadieron los temas neutros **Papel** y **Carbón**.

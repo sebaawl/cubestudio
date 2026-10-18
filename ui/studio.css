@@ -86,7 +86,7 @@ html.minimal-studio{font:13px Manrope,'Segoe UI',sans-serif;font-synthesis:none;
 .minimal-studio .panel-action svg{width:14px;height:14px}
 .minimal-studio .panel-action.detach-panel span{display:none}
 .minimal-studio .section-label,.minimal-studio .control-label{font-size:10px;letter-spacing:.03em;font-weight:500;color:var(--ui-muted);margin:0 0 15px;text-transform:none}
-.minimal-studio .quick-views{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;background:transparent;padding:0;margin:0 0 28px!important;flex:none;height:auto!important;border:0;border-radius:0;min-height:84px}
+.minimal-studio .quick-views{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;background:transparent;padding:0;margin:0 0 28px!important;flex:none;height:auto!important;border:0;border-radius:0;min-height:84px}
 .minimal-studio .quick-views button{display:flex;flex-direction:column;gap:11px;align-items:center;justify-content:center;min-height:80px;height:80px;padding:10px 0;border-radius:8px;color:var(--ui-muted);font-size:10px;font-weight:500;white-space:normal}
 .minimal-studio .quick-views button svg{width:32px;height:32px;stroke-width:1.25}
 .minimal-studio .field{display:block;position:relative;font-size:11px;line-height:1.5;color:var(--ui-muted);margin:0 0 23px;flex:none}
