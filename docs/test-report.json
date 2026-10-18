@@ -1,0 +1,67 @@
+{
+  "passed": 12,
+  "failed": 0,
+  "checks": [
+    {
+      "name": "Original scripts unchanged; all original controls retained",
+      "status": "passed",
+      "seconds": 1.44
+    },
+    {
+      "name": "Same engine state and identical exported pixels after edits and 3D capture",
+      "status": "passed",
+      "seconds": 2.49
+    },
+    {
+      "name": "Camera drag, zoom, views, face references and multi-face framing",
+      "status": "passed",
+      "seconds": 11.57
+    },
+    {
+      "name": "Painting, undo/redo, sticker and piece selection, isolation and hidden output",
+      "status": "passed",
+      "seconds": 1.28
+    },
+    {
+      "name": "Turns, inverse, scramble, half-turn captures, 3D arrows and resets",
+      "status": "passed",
+      "seconds": 1.69
+    },
+    {
+      "name": "Stroke, divisions, palette, individual colors, opacity and separate viewer background",
+      "status": "passed",
+      "seconds": 1.3
+    },
+    {
+      "name": "Download real 1024px PNG and editable vector SVG; filenames and framing",
+      "status": "passed",
+      "seconds": 7.94
+    },
+    {
+      "name": "Preset save/search, folders, library JSON import/export, camera policy and persistence",
+      "status": "passed",
+      "seconds": 4.16
+    },
+    {
+      "name": "Physical-case verification accepts solved cube and reports invalid paint without blocking export",
+      "status": "passed",
+      "seconds": 1.22
+    },
+    {
+      "name": "Themes persist; locks, floating panels, focus, shortcuts and reset menu work",
+      "status": "passed",
+      "seconds": 2.06
+    },
+    {
+      "name": "Desktop, laptop, tablet and mobile layouts preserve navigation and canvas",
+      "status": "passed",
+      "seconds": 8.04
+    },
+    {
+      "name": "No browser JavaScript errors during all checks",
+      "status": "passed",
+      "seconds": 0.0
+    }
+  ],
+  "browser_errors": []
+}

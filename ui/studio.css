@@ -1,0 +1,370 @@
+/* Quiet, compact workbench. Original component and canvas behavior is retained. */
+html.minimal-studio {
+  font-family: 'Segoe UI Variable Text', 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 13px;
+  font-synthesis: none;
+  -webkit-font-smoothing: antialiased;
+}
+.minimal-studio * { scrollbar-width: thin; scrollbar-color: var(--ui-border) transparent; }
+.minimal-studio button, .minimal-studio input, .minimal-studio select, .minimal-studio textarea { font-family: inherit; }
+.minimal-studio button { min-height: 34px; border-radius: 5px; font-size: 12px; font-weight: 500; transition: background .15s, border-color .15s, color .15s; }
+.minimal-studio button:active:not(:disabled) { transform: translateY(1px); }
+.minimal-studio button:disabled { cursor: not-allowed; opacity: .38; }
+.minimal-studio :focus-visible { outline: 2px solid var(--ui-accent); outline-offset: 3px; }
+.minimal-studio svg { stroke-width: 1.7; }
+.minimal-studio .primary { box-shadow: none; }
+.minimal-studio h1, .minimal-studio h2, .minimal-studio h3 { font-family: inherit; font-weight: 600; letter-spacing: -.025em; }
+.minimal-studio .app-header { height: 62px; min-height: 62px; padding: 0 22px; gap: 24px; border-bottom: 1px solid var(--ui-border); }
+.minimal-studio .brand { font-size: 18px; gap: 10px; letter-spacing: -.6px; white-space: nowrap; }
+.minimal-studio .brand-mark { width: 30px; height: 32px; border-radius: 6px; }
+.minimal-studio .brand-mark svg { width: 22px; height: 22px; }
+.minimal-studio .brand-light { font-weight: 400; color: var(--ui-text); }
+.minimal-studio .header-center { position: static; transform: none; margin-right: auto; display: flex; gap: 21px; font-size: 12px; letter-spacing: 0; }
+.minimal-studio .header-separator { color: var(--ui-border); font-size: 24px; font-weight: 300; }
+.minimal-studio .header-actions { margin-left: auto; gap: 6px; }
+.minimal-studio .header-actions button { padding: 8px 12px; height: 35px; font-size: 12px; }
+.minimal-studio .header-actions svg { width: 16px; height: 16px; }
+.minimal-studio .header-utility { background: transparent; border-color: transparent; color: var(--ui-muted); }
+.minimal-studio #themeToggle { padding: 7px; width: 34px; }
+.minimal-studio #openLibrary { border: 1px solid var(--ui-border); background: var(--ui-panel); color: var(--ui-text); margin-left: 7px; }
+.minimal-studio #openExport { padding: 8px 17px; margin-left: 3px; }
+.minimal-studio .studio { grid-template-columns: minmax(0, 1fr) 336px; }
+.minimal-studio .workspace { padding: 22px 24px 0; gap: 18px; background: var(--ui-bg); }
+.minimal-studio .workspace-top { gap: 12px; }
+.minimal-studio .workspace-top > div:first-child { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.minimal-studio .workspace-top .eyebrow { display: none; }
+.minimal-studio h1 { font-size: 18px; line-height: 1.4; letter-spacing: -.5px; margin: 0; }
+.minimal-studio .model-tag { font-size: 11px; color: var(--ui-muted); border-left: 1px solid var(--ui-border); padding-left: 12px; }
+.minimal-studio .workspace-options { align-items: center; gap: 3px; }
+.minimal-studio .workspace-options .icon-button { width: 32px; min-width: 32px; height: 32px; }
+.minimal-studio .modebar { border: 1px solid var(--ui-border); background: var(--ui-panel); padding: 4px; gap: 3px; border-radius: 7px; margin-top: -2px; width: fit-content; }
+.minimal-studio .modebar button { border: 1px solid transparent; padding: 8px 12px; gap: 8px; font-size: 12px; min-height: 37px; box-shadow: none; color: var(--ui-muted); }
+.minimal-studio .modebar button.active { background: var(--ui-soft); color: var(--ui-text); border-color: var(--ui-border); box-shadow: none; }
+.minimal-studio .modebar button:hover { background: var(--ui-soft); }
+.minimal-studio .modebar svg { width: 17px; height: 17px; }
+.minimal-studio kbd { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 10px; line-height: 16px; padding: 0 4px; border: 1px solid var(--ui-border); background: var(--ui-well); color: var(--ui-muted); border-radius: 3px; }
+.minimal-studio .modebar kbd { font-size: 9px; line-height: 15px; margin-left: 3px; }
+.minimal-studio #stage { border: 1px solid var(--ui-border); border-radius: 7px; min-height: 190px; }
+.minimal-studio .stage-corner { top: 17px; left: 18px; font-size: 11px; gap: 7px; }
+.minimal-studio .stage-stats { font-size: 10px; top: 18px; right: 18px; }
+.minimal-studio .stage-note { font-size: 11px; bottom: 18px; letter-spacing: 0; }
+.minimal-studio .live-dot { width: 5px; height: 5px; }
+.minimal-studio .canvas-toolbar { min-height: 56px; margin-top: -18px; padding: 9px 0; gap: 6px; }
+.minimal-studio .history-actions { display: flex; align-items: center; gap: 2px; }
+.minimal-studio .history-actions .icon-button { width: auto; height: 33px; padding: 6px 9px; gap: 7px; }
+.minimal-studio .history-actions svg { width: 16px; height: 16px; }
+.minimal-studio .toolbar-divider { width: 1px; height: 18px; background: var(--ui-border); margin: 0 9px; }
+.minimal-studio .toolbar-divider[hidden] { display: none; }
+.minimal-studio #verifyCase { background: transparent; border-color: transparent; padding: 6px 8px; font-size: 11px; gap: 6px; }
+.minimal-studio .canvas-actions { display: flex; align-items: center; gap: 14px; }
+.minimal-studio .canvas-frame { background: transparent; border: 0; padding: 6px 0; font-size: 11px; gap: 7px; color: var(--ui-muted); }
+.minimal-studio .canvas-frame svg { width: 16px; height: 16px; }
+.minimal-studio .zoom-control { display: flex; align-items: center; background: var(--ui-panel); border: 1px solid var(--ui-border); border-radius: 5px; height: 32px; }
+.minimal-studio .zoom-control button { background: transparent; border: 0; min-height: 30px; width: 30px; padding: 0; font-size: 17px; font-weight: 400; }
+.minimal-studio .zoom-readout { background: transparent; color: var(--ui-text); font-size: 11px; width: 48px; padding: 0; text-align: center; font-variant-numeric: tabular-nums; }
+.minimal-studio #mobileOptions { display: inline-flex; width: 30px; min-width: 30px; font-size: 17px; }
+.minimal-studio .inspector { border-left: 1px solid var(--ui-border); }
+.minimal-studio .inspector-top { padding: 23px 22px 18px; }
+.minimal-studio .inspector-top .eyebrow { color: var(--ui-text); font-size: 13px; font-weight: 600; letter-spacing: 0; text-transform: none; }
+.minimal-studio .local-badge { font-size: 10px; }
+.minimal-studio .panel-tabs { margin: 0 20px; padding: 0; border: 0; border-bottom: 1px solid var(--ui-border); border-radius: 0; background: transparent; gap: 18px; }
+.minimal-studio .panel-tabs button { border: 0; border-bottom: 2px solid transparent; border-radius: 0; min-height: 35px; padding: 0 2px 10px; flex: 1; font-size: 12px; background: transparent; box-shadow: none; }
+.minimal-studio .panel-tabs button[aria-selected=true] { color: var(--ui-text); border-bottom-color: var(--ui-text); background: transparent; box-shadow: none; }
+.minimal-studio .panel { padding: 23px 22px; gap: 0; }
+.minimal-studio .panel-heading { gap: 8px; align-items: start; margin: 0 0 22px; position: relative; padding-right: 0; }
+.minimal-studio .panel-heading > div:not(.panel-actions) { min-width: 0; }
+.minimal-studio .panel-heading h2 { font-size: 16px; line-height: 1.4; margin: 0 0 6px; letter-spacing: -.35px; }
+.minimal-studio .panel-heading p { font-size: 11px; line-height: 1.6; max-width: 215px; }
+.minimal-studio .panel-icon { display: none; }
+.minimal-studio .panel-actions { gap: 1px; margin-left: auto; flex: none; }
+.minimal-studio .panel-action { width: 24px; height: 25px; min-height: 25px; min-width: 24px; padding: 4px; }
+.minimal-studio .panel-action.detach-panel { width: 24px; padding: 4px; }
+.minimal-studio .panel-action.detach-panel span { display: none; }
+.minimal-studio .panel-action svg { width: 14px; height: 14px; }
+.minimal-studio .field { font-size: 12px; color: var(--ui-text); line-height: 1.5; margin: 0 0 21px; }
+.minimal-studio select, .minimal-studio input:not([type]), .minimal-studio input[type=search], .minimal-studio input[type=text], .minimal-studio input[type=number] { font-size: 12px; border: 1px solid var(--ui-border); border-radius: 5px; background: var(--ui-well); color: var(--ui-text); padding: 9px 10px; min-height: 37px; margin-top: 7px; }
+.minimal-studio input::placeholder { color: var(--ui-muted); opacity: .85; }
+.minimal-studio .has-field-lock:has(select) { padding-right: 0; }
+.minimal-studio .field-lock { top: -2px; right: 0; width: 20px; height: 21px; min-height: 21px; opacity: .48; }
+.minimal-studio .field-lock.is-locked { opacity: 1; }
+.minimal-studio .has-field-lock output { margin-right: 27px; }
+.minimal-studio .face-picker { min-height: 38px; padding: 9px 10px; margin-top: 7px; border-radius: 5px; font-size: 12px; }
+.minimal-studio .face-picker-list { border-radius: 6px; box-shadow: 0 5px 20px #1c271c12; padding: 5px; }
+.minimal-studio .face-picker-list button { font-size: 12px; min-height: 37px; }
+.minimal-studio .quick-views { gap: 4px; padding: 0; background: transparent; border-radius: 0; display: grid !important; grid-template-columns: repeat(3, 1fr); margin-bottom: 23px !important; }
+.minimal-studio #panel-camera > .quick-views { height: auto; min-height: 75px; flex: 0 0 auto; }
+.minimal-studio .quick-views button { border: 1px solid var(--ui-border); background: var(--ui-panel); padding: 7px 5px; font-size: 11px; }
+.minimal-studio #selectCameraFaces { grid-column: 1/-1; margin-top: 3px; background: var(--ui-well); }
+.minimal-studio #selectCameraFaces[aria-pressed=true] { background: var(--ui-soft); border-color: var(--ui-accent); }
+.minimal-studio .camera-top-control { display: block; margin: 0 0 19px; }
+.minimal-studio .camera-top-control .field { font-size: 12px; }
+.minimal-studio .camera-top-control select { padding: 9px 10px; font-size: 12px; }
+.minimal-studio #topCaption { font-size: 10px; max-width: 100%; margin-top: 7px; }
+.minimal-studio #topCaption .face-tag { margin-top: 0; }
+.minimal-studio input[type=range] { margin: 16px 0 7px; height: 3px; }
+.minimal-studio input[type=range]::-webkit-slider-thumb { width: 13px; height: 13px; border-width: 2px; box-shadow: none; }
+.minimal-studio input[type=range]::-moz-range-thumb { width: 11px; height: 11px; border-width: 2px; box-shadow: none; }
+.minimal-studio output:not(.filename-full) { font-size: 11px; font-variant-numeric: tabular-nums; border-radius: 3px; }
+.minimal-studio #applyFraming { background: var(--ui-primary); border-color: var(--ui-primary); color: var(--ui-primaryInk); width: 100%; margin-top: 3px; min-height: 37px; font-size: 12px; }
+.minimal-studio #resetCamera { margin: 6px auto 0 !important; font-size: 11px; }
+.minimal-studio .framing-actions { display: flex; flex-direction: column; align-items: stretch; gap: 3px; margin-bottom: 0; }
+.minimal-studio .help-card { background: var(--ui-well); border: 1px solid var(--ui-border); font-size: 11px; line-height: 1.7; padding: 12px; border-radius: 5px; margin: 0 0 18px; }
+.minimal-studio .case-utilities { display: flex; gap: 6px; margin: 0 0 8px; }
+.minimal-studio .case-utilities button { min-height: 33px; font-size: 11px; padding: 7px; }
+.minimal-studio #outputOptions { text-align: left; }
+.minimal-studio #resetTool { font-size: 10px; }
+.minimal-studio .case-badge { font-size: 10px; padding: 7px 10px; min-height: 30px; border: 1px solid var(--ui-border); background: var(--ui-well); margin-bottom: 18px; }
+.minimal-studio .tiny-note { font-size: 11px; line-height: 1.65; }
+.minimal-studio .control-label { font-size: 10px; font-weight: 600; letter-spacing: .07em; color: var(--ui-muted); margin-bottom: 12px; }
+.minimal-studio .gesture-guide { gap: 12px; margin: 8px 0 18px; }
+.minimal-studio .gesture-guide b { font-size: 12px; color: var(--ui-text); }
+.minimal-studio .gesture-guide p { font-size: 11px; line-height: 1.7; }
+.minimal-studio .gesture-orbit { height: 40px; width: 40px; flex: none; font-size: 22px; border-radius: 5px; }
+.minimal-studio .wide-button { font-size: 12px; min-height: 36px; padding: 9px 10px; }
+.minimal-studio .panel-bottom { margin-top: auto; padding-top: 24px; }
+.minimal-studio .paired button { font-size: 11px; }
+.minimal-studio .brushes { gap: 9px; margin: 10px 0 39px; }
+.minimal-studio .brushes button { border-radius: 5px; height: 34px; min-height: 34px; width: 34px; position: relative; }
+.minimal-studio .brushes button::after { content: attr(data-color-label); position: absolute; top: 40px; left: 50%; transform: translateX(-50%); font-size: 9px; font-weight: 400; color: var(--ui-muted); text-shadow: none; }
+.minimal-studio .brushes .selected { outline-width: 2px; outline-offset: 3px; }
+.minimal-studio .face-views { gap: 6px; }
+.minimal-studio .face-views button { font-size: 11px; min-height: 34px; }
+.minimal-studio .moves { grid-template-columns: repeat(6, 1fr); gap: 5px; margin-bottom: 12px; }
+.minimal-studio .moves button { min-height: 36px; font-family: ui-monospace, Consolas, monospace; font-size: 13px; }
+.minimal-studio .capture-controls { gap: 7px; margin-bottom: 20px; }
+.minimal-studio #captureMode, .minimal-studio #scrambleCube { min-height: 36px; padding: 8px; font-size: 12px; justify-content: flex-start; }
+.minimal-studio #captureMode[aria-pressed=true] { background: var(--ui-soft); border-color: var(--ui-accent); color: var(--ui-text); }
+.minimal-studio #captureSettings { padding: 9px 11px; border: 1px solid var(--ui-border); border-radius: 5px; margin: 0; background: var(--ui-well); }
+.minimal-studio #captureSettings .switch-row { font-size: 11px; padding: 0 23px 0 0; border: 0; margin: 0; }
+.minimal-studio #arrowConfig { margin-top: 7px; padding: 5px 0; font-size: 11px; }
+.minimal-studio .switch-row { font-size: 12px; padding: 12px 0; margin: 0 0 14px; }
+.minimal-studio .has-field-lock.switch-row { padding-right: 28px; }
+.minimal-studio .switch-row small { font-size: 10px; line-height: 1.6; }
+.minimal-studio input[role=switch] { width: 30px; height: 17px; }
+.minimal-studio input[role=switch]:after { height: 13px; width: 13px; }
+.minimal-studio .subtabs { margin-bottom: 18px; gap: 20px; }
+.minimal-studio .subtabs button { font-size: 12px; min-height: 32px; padding: 0 0 9px; }
+.minimal-studio .section-window-button { font-size: 10px; min-height: 27px; margin: -5px 0 18px; padding: 5px 8px; }
+.minimal-studio .section-reset { font-size: 11px; min-height: 30px; padding: 6px 9px; margin-top: 13px; }
+.minimal-studio .palette { gap: 7px; margin-bottom: 24px; }
+.minimal-studio .palette label { font-size: 9px; }
+.minimal-studio .palette input { width: 32px; height: 32px; }
+.minimal-studio .palette .field-lock { top: -9px; right: -4px; }
+.minimal-studio .cube-palette-control { display: block; margin-bottom: 18px; }
+.minimal-studio .cube-palette-control .field { font-size: 12px; }
+.minimal-studio .cube-palette-control select { font-size: 12px; padding: 9px 10px; }
+.minimal-studio .palette-preview { gap: 4px; margin-top: 9px; }
+.minimal-studio .palette-preview i { height: 10px; flex: 1; border-radius: 2px; }
+.minimal-studio .color-row { font-size: 12px; }
+.minimal-studio .inspector-footer { padding: 13px 22px; font-size: 10px; line-height: 1.4; }
+.minimal-studio .statusbar { min-height: 29px; height: 29px; padding: 0 24px; font-size: 10px; border-top: 1px solid var(--ui-border); }
+.minimal-studio #footerHelp { font-size: 10px; min-height: 25px; padding: 0 3px; }
+.minimal-studio .status-right { gap: 8px; }
+.minimal-studio #status { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+.minimal-studio #presetPager { padding: 10px 0; }
+.minimal-studio .reset-menu { position: relative; }
+.minimal-studio .reset-toggle { background: transparent; border-color: transparent; font-size: 11px; gap: 6px; padding: 6px 8px; color: var(--ui-muted); }
+.minimal-studio .reset-toggle svg { width: 14px; height: 14px; }
+.minimal-studio .chevron { font-size: 14px; margin-left: 2px; }
+.minimal-studio .reset-content { position: absolute; z-index: 40; top: 40px; right: 0; width: 230px; border: 1px solid var(--ui-border); background: var(--ui-panel); border-radius: 7px; padding: 8px; box-shadow: 0 5px 24px #1e2c1e14; }
+.minimal-studio .reset-content[hidden] { display: none; }
+.minimal-studio .reset-content button { display: flex; width: 100%; background: transparent; border: 0; font-size: 12px !important; padding: 9px 10px; min-height: 38px; text-align: left; justify-content: flex-start; color: var(--ui-text); }
+.minimal-studio .reset-content button svg { width: 16px; height: 16px; }
+.minimal-studio .reset-content button:hover { background: var(--ui-soft); }
+.minimal-studio .reset-content .tiny-note { margin: 8px 10px 5px; font-size: 10px; }
+.minimal-studio .menu-heading { margin: 7px 10px 8px; color: var(--ui-muted); font-size: 10px; }
+.minimal-studio dialog { border: 1px solid var(--ui-border); border-radius: 9px; box-shadow: 0 12px 60px #1a291a20; padding: 26px; }
+.minimal-studio dialog::backdrop { background: #1d281d45; backdrop-filter: blur(2px); }
+.minimal-studio .dialog-heading { margin-bottom: 23px; align-items: center; }
+.minimal-studio .dialog-heading h2 { font-size: 22px; letter-spacing: -.6px; margin: 5px 0 0; }
+.minimal-studio .dialog-heading .eyebrow { font-size: 9px; letter-spacing: 1.2px; }
+.minimal-studio .dialog-heading .icon-button { height: 32px; width: 32px; min-height: 32px; font-size: 20px; }
+.minimal-studio .export-preview { border-radius: 5px; }
+.minimal-studio .export-body { gap: 24px; }
+.minimal-studio .export-button { min-height: 41px; font-size: 12px; border-radius: 5px; }
+.minimal-studio #exportSVG { background: var(--ui-panel); border: 1px solid var(--ui-border); color: var(--ui-text); margin-top: 8px; }
+.minimal-studio .auto-name-row { font-size: 11px; }
+.minimal-studio .filename-full { font-family: ui-monospace, Consolas, monospace; font-size: 10px; padding: 10px; border-radius: 5px; }
+.minimal-studio #libraryDialog { width: 920px; padding: 26px; }
+.minimal-studio #libraryDialog > .dialog-heading { margin-bottom: 7px; }
+.minimal-studio .library-intro { color: var(--ui-muted); font-size: 12px; line-height: 1.7; margin: 0 0 24px; max-width: 650px; }
+.minimal-studio .library-layout { grid-template-columns: minmax(0,1.15fr) minmax(0,1fr); gap: 24px; }
+.minimal-studio #libraryDialog .library-side { padding-left: 24px; }
+.minimal-studio #libraryControls .panel-heading { display: none; }
+.minimal-studio #panel-library .save-row { margin-bottom: 8px; }
+.minimal-studio #panel-library .save-row input { font-size: 12px; min-height: 38px; }
+.minimal-studio #panel-library .save-row button { width: auto; height: 38px; padding: 8px 12px; gap: 5px; }
+.minimal-studio #overwritePreset { font-size: 11px; min-height: 32px; background: transparent; }
+.minimal-studio #panel-library > .tiny-note { font-size: 11px; line-height: 1.6; margin: 10px 0 18px; }
+.minimal-studio #libraryDialog .folder-toolbar .field { font-size: 11px; }
+.minimal-studio #libraryDialog .folder-toolbar select { font-size: 12px; padding: 8px; }
+.minimal-studio #toggleFolders { font-size: 11px; min-height: 37px; }
+.minimal-studio #panel-library #presetSearch { font-size: 12px; margin: 10px 0; }
+.minimal-studio #panel-library .folder-preset { grid-template-columns: minmax(0,1fr) auto 30px 30px; padding: 7px !important; min-height: 72px; border-radius: 5px; margin-bottom: 8px; }
+.minimal-studio #panel-library .preset button { font-size: 11px; min-height: 31px; padding: 5px; }
+.minimal-studio #panel-library .preset button:first-child { font-size: 12px; font-weight: 500; }
+.minimal-studio .preset-order { padding-top: 4px; }
+.minimal-studio .preset-order select { font-size: 10px; min-height: 27px; margin: 0; padding: 4px 6px; }
+.minimal-studio .preset-order button { min-height: 26px !important; }
+.minimal-studio #presetDetails { font-size: 12px; }
+.minimal-studio #presetDetails h3 { font-size: 18px; }
+.minimal-studio .detail-camera { font-size: 12px; border-radius: 5px; }
+.minimal-studio .folder-organizer { border-radius: 5px; padding: 12px; }
+.minimal-studio .folder-name-row input { font-size: 11px; margin: 0; min-height: 35px; }
+.minimal-studio .folder-name-row button { font-size: 11px; }
+.minimal-studio .folder-actions { flex-wrap: wrap; gap: 5px; }
+.minimal-studio .folder-actions button, .minimal-studio .folder-drop { font-size: 10px; min-height: 28px; padding: 5px 7px; border-radius: 4px; }
+.minimal-studio .neutral-themes { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; grid-column: 1/-1; }
+.minimal-studio .neutral-themes button { padding: 12px; font-size: 12px; }
+.minimal-studio .theme-options button { font-size: 11px; }
+.minimal-studio .environment-tabs button { font-size: 12px; min-height: 34px; }
+.minimal-studio .lock-option { padding: 12px; border-radius: 5px; font-size: 12px; }
+.minimal-studio .panel-manager-row { border-radius: 5px; padding: 10px; font-size: 12px; }
+.minimal-studio .panel-manager-row button { min-height: 30px; font-size: 11px; }
+.minimal-studio .check-bar, .minimal-studio .capture-bar { border-radius: 6px; box-shadow: 0 3px 16px #1b2b1b12; padding: 13px; }
+.minimal-studio .check-bar b, .minimal-studio .capture-bar b { font-size: 12px; }
+.minimal-studio .check-bar span, .minimal-studio .capture-bar small { font-size: 11px; }
+.minimal-studio .check-bar button, .minimal-studio .capture-bar button { font-size: 11px; min-height: 34px; }
+.minimal-studio #arrowDialog { width: 410px; padding: 22px; top: 74px; right: 16px; box-shadow: 0 8px 40px #17271720; border-radius: 8px; }
+.minimal-studio #arrowDialog h2 { font-size: 18px; }
+.minimal-studio .arrow-preview { height: 145px; border-radius: 5px; }
+.minimal-studio .arrow-fields { gap: 19px 18px; }
+.minimal-studio .arrow-fields .field, .minimal-studio .arrow-fields select { font-size: 11px; }
+.minimal-studio .arrow-fields select { padding: 8px; }
+.minimal-studio .arrow-rotation-field input[type=number] { width: 85px; min-height: 33px; padding: 6px; }
+.minimal-studio .arrow-tabs button { font-size: 12px; }
+.minimal-studio .studio-window { border-radius: 7px; box-shadow: 0 7px 32px #17271720; }
+.minimal-studio .window-header { font-size: 12px; padding: 10px 12px; }
+.minimal-studio .window-actions button { min-height: 25px; }
+.minimal-studio .face-context-menu { border-radius: 6px; box-shadow: 0 4px 24px #18281820; }
+.minimal-studio .face-context-menu button { min-height: 37px; font-size: 12px; }
+.minimal-studio .face-context-menu .tiny-note, .minimal-studio .face-context-menu p { font-size: 10px; }
+.minimal-studio .face-context-menu .top-shortcuts button { font-size: 10px; }
+.minimal-studio .skip-link { position: fixed; top: -60px; left: 12px; z-index: 600; padding: 10px 15px; background: var(--ui-panel); color: var(--ui-text); border: 1px solid var(--ui-border); border-radius: 5px; }
+.minimal-studio .skip-link:focus { top: 10px; }
+.minimal-studio body.focus-mode .studio { grid-template-columns: 1fr; }
+
+@media (max-height: 820px) and (min-width: 761px) {
+  .minimal-studio .workspace { padding-top: 16px; gap: 13px; }
+  .minimal-studio .canvas-toolbar { margin-top: -13px; }
+  .minimal-studio .inspector-top { padding: 19px 22px 15px; }
+  .minimal-studio .panel { padding-top: 19px; }
+  .minimal-studio .panel-heading { margin-bottom: 16px; }
+  .minimal-studio .field { margin-bottom: 16px; }
+  .minimal-studio .quick-views { margin-bottom: 18px !important; }
+  .minimal-studio .camera-top-control { margin-bottom: 15px; }
+  .minimal-studio .panel-heading p { display: block !important; }
+  .minimal-studio .arrow-preview { height: 105px; }
+}
+@media (max-width: 1100px) and (min-width: 761px) {
+  .minimal-studio .app-header { padding: 0 18px; gap: 18px; }
+  .minimal-studio .header-center { display: none; }
+  .minimal-studio .studio { grid-template-columns: minmax(0,1fr) 310px; }
+  .minimal-studio .workspace { padding-left: 18px; padding-right: 18px; }
+  .minimal-studio .modebar button { padding: 8px; font-size: 11px; gap: 5px; }
+  .minimal-studio .modebar kbd { display: none; }
+  .minimal-studio .model-tag { display: none; }
+  .minimal-studio .canvas-actions { gap: 8px; }
+  .minimal-studio .canvas-frame kbd { display: none; }
+  .minimal-studio .history-actions .button-label { display: none; }
+}
+@media (max-width: 760px) {
+  .minimal-studio .app-header { min-height: 56px; height: 56px; padding: 0 12px; gap: 12px; }
+  .minimal-studio .brand { font-size: 16px; gap: 7px; }
+  .minimal-studio .brand-light { display: inline; }
+  .minimal-studio .brand-mark { width: 27px; height: 29px; }
+  .minimal-studio .brand-mark svg { width: 20px; height: 20px; }
+  .minimal-studio .header-center { display: none; }
+  .minimal-studio .header-actions { gap: 2px; }
+  .minimal-studio .header-actions button { padding: 7px; min-height: 33px; height: 33px; }
+  .minimal-studio .header-actions #help, .minimal-studio #themeToggle { display: none; }
+  .minimal-studio #workspaceSettings .button-label { display: none; }
+  .minimal-studio .header-actions #openLibrary { margin-left: 0; padding: 7px 10px; }
+  .minimal-studio .header-actions #openLibrary { display: inline-flex; }
+  .minimal-studio .header-actions #openExport { padding: 7px 10px; margin-left: 3px; }
+  .minimal-studio .header-actions #openExport span { display: inline; }
+  .minimal-studio .header-actions #openExport:after { content: none; }
+  .minimal-studio .studio { display: grid; grid-template-columns: 1fr; grid-template-rows: minmax(280px,1fr) minmax(210px,42%); overflow: hidden; }
+  .minimal-studio .workspace { padding: 12px 12px 0; gap: 10px; min-height: 0; }
+  .minimal-studio .workspace-top { min-height: 30px; display: flex; }
+  .minimal-studio h1 { font-size: 15px; }
+  .minimal-studio .model-tag { display: none; }
+  .minimal-studio .reset-toggle { min-height: 29px; padding: 4px; }
+  .minimal-studio .reset-toggle > span:not(.chevron) { display: none; }
+  .minimal-studio .reset-toggle svg { width: 16px; height: 16px; }
+  .minimal-studio .workspace-options .icon-button { width: 29px; min-width: 29px; height: 29px; min-height: 29px; }
+  .minimal-studio .modebar { width: 100%; max-width: 100%; flex-wrap: nowrap; padding: 3px; gap: 1px; margin: 0; overflow-x: auto; border-radius: 5px; }
+  .minimal-studio .modebar button { flex: 1 0 auto; padding: 6px 7px; gap: 5px; min-height: 34px; font-size: 10px; }
+  .minimal-studio .modebar button svg { width: 14px; height: 14px; display: block; }
+  .minimal-studio .modebar button span { display: inline; }
+  .minimal-studio .modebar kbd { display: none; }
+  .minimal-studio #stage { min-height: 110px; border-radius: 5px; }
+  .minimal-studio .stage-corner { top: 11px; left: 12px; font-size: 9px; }
+  .minimal-studio .stage-stats { top: 12px; right: 12px; font-size: 8px; }
+  .minimal-studio .stage-note { bottom: 11px; font-size: 9px; }
+  .minimal-studio .canvas-toolbar { min-height: 43px; margin-top: -10px; padding: 5px 0; }
+  .minimal-studio .history-actions .icon-button { width: 30px; padding: 6px; }
+  .minimal-studio .history-actions .button-label { display: none; }
+  .minimal-studio .toolbar-divider { margin: 0 4px; }
+  .minimal-studio #verifyCase { font-size: 9px; padding: 4px; gap: 3px; }
+  .minimal-studio .canvas-actions { gap: 7px; }
+  .minimal-studio .canvas-frame { font-size: 10px; }
+  .minimal-studio .canvas-frame kbd { display: none; }
+  .minimal-studio .zoom-control { height: 29px; }
+  .minimal-studio .zoom-control button { min-height: 27px; width: 25px; }
+  .minimal-studio .zoom-readout { width: 37px; font-size: 10px; }
+  .minimal-studio #mobileOptions { min-width: 26px; width: 26px; min-height: 29px; }
+  .minimal-studio .inspector { border-left: 0; border-top: 1px solid var(--ui-border); overflow: hidden; height: auto; }
+  .minimal-studio .inspector-top { display: none; }
+  .minimal-studio .panel-tabs { position: static; inset: auto; margin: 0 18px; padding: 0; border: 0; border-bottom: 1px solid var(--ui-border); min-height: 43px; gap: 18px; }
+  .minimal-studio .panel-tabs button { min-height: 42px; padding: 10px 0; font-size: 12px; }
+  .minimal-studio .panel { padding: 18px; display: flex; flex-direction: column; overflow-y: auto; position: static; }
+  .minimal-studio .panel-heading { display: flex; margin-bottom: 15px; gap: 10px; }
+  .minimal-studio .panel-heading h2 { font-size: 15px; }
+  .minimal-studio .panel-heading p { font-size: 11px; }
+  .minimal-studio .panel-heading > div:not(.panel-actions) { max-width: none; }
+  .minimal-studio #panel-style .subtabs { position: static; margin: 0 0 18px; }
+  .minimal-studio #panel-style .subtabs button { font-size: 12px; }
+  .minimal-studio .panel .field { font-size: 12px; margin-bottom: 19px; }
+  .minimal-studio .panel .range-field { margin-bottom: 20px; }
+  .minimal-studio #panel-camera, .minimal-studio #panel-style, .minimal-studio #panel-edit { display: flex; padding-top: 18px; }
+  .minimal-studio #panel-camera .field, .minimal-studio #panel-style .field { grid-column: auto; }
+  .minimal-studio #style-ink, .minimal-studio #style-color { display: block; }
+  .minimal-studio .context-tools { display: block; }
+  .minimal-studio .inspector-footer { display: none; }
+  .minimal-studio .statusbar { height: 25px; min-height: 25px; padding: 0 12px; font-size: 9px; }
+  .minimal-studio .status-right > .live-dot, .minimal-studio .status-divider { display: none; }
+  .minimal-studio .status-right { display: flex; flex: none; font-size: 0; }
+  .minimal-studio .status-right #footerHelp { font-size: 10px; }
+  .minimal-studio #libraryDialog, .minimal-studio dialog { max-width: calc(100vw - 20px); padding: 20px; max-height: calc(100dvh - 24px); }
+  .minimal-studio .library-layout { grid-template-columns: 1fr; gap: 20px; }
+  .minimal-studio #libraryDialog .library-side { padding: 18px 0 0; position: static; border-left: 0; border-top: 1px solid var(--ui-border); }
+  .minimal-studio .library-intro { font-size: 11px; }
+  .minimal-studio .export-body { grid-template-columns: 1fr; gap: 16px; }
+  .minimal-studio .export-preview { max-height: 160px; }
+  .minimal-studio #arrowDialog { width: 370px; right: 10px; top: 66px; padding: 18px; max-height: calc(100dvh - 78px); }
+  .minimal-studio .arrow-preview { height: 100px; }
+  .minimal-studio .check-bar { left: 8px; right: 8px; bottom: 8px; padding: 9px; gap: 8px; }
+  .minimal-studio .check-bar b { font-size: 11px; }
+  .minimal-studio .check-bar span { font-size: 10px; }
+  .minimal-studio .check-bar button { min-height: 30px; font-size: 10px; padding: 6px; }
+  .minimal-studio .capture-bar { left: 8px; right: 8px; bottom: 8px; padding: 9px; }
+  .minimal-studio .capture-bar small { font-size: 9px; }
+  .minimal-studio .capture-bar b { font-size: 11px; }
+  .minimal-studio .capture-bar button { min-height: 30px; font-size: 10px; }
+  .minimal-studio body.focus-mode .studio { grid-template-rows: minmax(0,1fr); }
+}
+@media (max-width: 420px) {
+  .minimal-studio .brand-light { display: none; }
+  .minimal-studio .header-actions button svg { width: 15px; height: 15px; }
+  .minimal-studio .header-actions #openLibrary, .minimal-studio .header-actions #openExport { padding: 7px 8px; font-size: 11px; }
+  .minimal-studio .modebar button { padding: 6px 5px; gap: 4px; font-size: 9px; }
+  .minimal-studio .modebar button svg { width: 13px; height: 13px; }
+  .minimal-studio .canvas-frame span { display: none; }
+  .minimal-studio .canvas-actions { gap: 5px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .minimal-studio *, .minimal-studio *::before, .minimal-studio *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}
+/* Hidden original states always take precedence over layout overrides. */
+.minimal-studio [hidden] { display: none !important; }

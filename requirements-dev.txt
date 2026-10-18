@@ -1,0 +1,2 @@
+# Only needed for the regression suite; the app and build have no dependencies.
+playwright==1.62.0
