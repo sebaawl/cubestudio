@@ -1,61 +1,72 @@
 {
-  "passed": 12,
+  "passed": 14,
   "failed": 0,
+  "app_sha256": "d5cb31c01ae40dca913fdd276a4784b32db8bc2a2ad537947c18cfb44deb7710",
   "checks": [
     {
       "name": "Original scripts unchanged; all original controls retained",
       "status": "passed",
-      "seconds": 1.44
+      "seconds": 1.47
     },
     {
       "name": "Same engine state and identical exported pixels after edits and 3D capture",
       "status": "passed",
-      "seconds": 2.49
+      "seconds": 1.8
     },
     {
       "name": "Camera drag, zoom, views, face references and multi-face framing",
       "status": "passed",
-      "seconds": 11.57
+      "seconds": 11.81
     },
     {
       "name": "Painting, undo/redo, sticker and piece selection, isolation and hidden output",
       "status": "passed",
-      "seconds": 1.28
+      "seconds": 1.86
     },
     {
       "name": "Turns, inverse, scramble, half-turn captures, 3D arrows and resets",
       "status": "passed",
-      "seconds": 1.69
+      "seconds": 1.8
     },
     {
       "name": "Stroke, divisions, palette, individual colors, opacity and separate viewer background",
       "status": "passed",
-      "seconds": 1.3
+      "seconds": 1.36
     },
     {
       "name": "Download real 1024px PNG and editable vector SVG; filenames and framing",
       "status": "passed",
-      "seconds": 7.94
+      "seconds": 8.01
     },
     {
       "name": "Preset save/search, folders, library JSON import/export, camera policy and persistence",
       "status": "passed",
-      "seconds": 4.16
+      "seconds": 3.93
     },
     {
       "name": "Physical-case verification accepts solved cube and reports invalid paint without blocking export",
       "status": "passed",
-      "seconds": 1.22
+      "seconds": 1.16
     },
     {
       "name": "Themes persist; locks, floating panels, focus, shortcuts and reset menu work",
       "status": "passed",
-      "seconds": 2.06
+      "seconds": 1.99
+    },
+    {
+      "name": "Open controls: selection contrast, numeric bounds, disabled states and persistent grid",
+      "status": "passed",
+      "seconds": 3.95
+    },
+    {
+      "name": "Actual compressed executable resource boots and edits offline with its bundled font",
+      "status": "passed",
+      "seconds": 1.44
     },
     {
       "name": "Desktop, laptop, tablet and mobile layouts preserve navigation and canvas",
       "status": "passed",
-      "seconds": 8.04
+      "seconds": 7.6
     },
     {
       "name": "No browser JavaScript errors during all checks",

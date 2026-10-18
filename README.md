@@ -1,6 +1,6 @@
-# Cubo Studio · Interfaz minimalista
+# Cubo Studio · Estudio abierto
 
-Rediseño funcional de Cubo Studio 1.14 a partir del ejecutable proporcionado. El motor del cubo, la verificación, el historial, los formatos de biblioteca y las exportaciones se conservan. La interfaz y su organización se implementan en una capa separada.
+Una mesa de trabajo abierta para ilustrar cubos: lienzo sin marco, herramientas independientes, opciones por contraste y tipografía con distintos tamaños y pesos. Conserva el motor, la verificación, el historial, los formatos de biblioteca y todas las funciones de Cubo Studio 1.14.
 
 ## Descargar
 
@@ -20,14 +20,16 @@ La aplicación sigue guardando la sesión y los presets localmente. Los datos de
 
 ## Organización
 
-- La cabecera fija contiene **Ayuda**, **Entorno**, **Biblioteca** y **Exportar**.
-- La barra de herramientas conserva **Cámara**, **Pintar**, **Pegatinas**, **Piezas** y **Girar capas**, con las teclas 1–5.
-- El panel **Propiedades** muestra **Cámara**, **Estilo** y **Herramienta**. Elegir una herramienta abre sus ajustes correspondientes.
+- La cabecera reúne **Encuadre**, **Apariencia** y **Herramienta**, junto a ayuda, entorno, biblioteca y exportación.
+- Los botones independientes de la izquierda son **Orientar**, **Pintar**, **Pegatinas**, **Piezas** y **Girar**, con las teclas 1–5. El contraste oscuro indica la herramienta seleccionada.
+- Los ajustes abiertos de la derecha cambian con la herramienta. Las opciones de estilo, selección, flechas y resolución se eligen con botones específicos.
+- Los valores se pueden escribir o ajustar con **− / +**. Opacidad y escala usan porcentajes; los demás campos muestran sus unidades.
+- En **Encuadre**, las vistas rápidas tienen iconos propios. **Orientación y escala** despliega los detalles de cámara. En **Exportar**, **Recorte y nombre de archivo** reúne los ajustes menos frecuentes.
 - Bajo el lienzo están el historial, la verificación contextual, el encuadre y la escala.
 - **Restablecer**, junto al lienzo, agrupa la herramienta actual, los colores originales y el estudio completo. Los cambios se pueden deshacer.
 - **Entorno** conserva los temas anteriores, los bloqueos, el orden de pestañas, la posición del panel y las ventanas independientes. Se añadieron los temas neutros **Papel** y **Carbón**.
 
-En pantallas pequeñas, las propiedades se sitúan debajo del lienzo y se desplazan de forma independiente. Los nombres de las herramientas permanecen visibles.
+En pantallas pequeñas, las herramientas se sitúan sobre el cubo y los ajustes debajo. Los nombres permanecen visibles. La cuadrícula de transparencia se activa junto al lienzo y recuerda su estado; por defecto, el fondo es continuo.
 
 ## Reconstruir
 
@@ -35,7 +37,7 @@ En pantallas pequeñas, las propiedades se sitúan debajo del lienzo y se despla
 python3 scripts/build.py
 ```
 
-Solo requiere Python 3. El script genera `index.html` y los entregables de `dist/`. Inserta `ui/studio.css` y `ui/studio.js` en el HTML recuperado, sin modificar sus quince scripts originales.
+Solo requiere Python 3. El script genera `index.html` y los entregables HTML/EXE de `dist/`. Inserta `ui/studio.css`, `ui/studio.js` y la fuente variable Manrope en el HTML recuperado, sin modificar sus quince scripts originales. La tipografía y su licencia quedan incluidas en el archivo autónomo: no se descargan al abrir la aplicación.
 
 Para generar el `.exe`, sustituye exclusivamente el recurso HTML reservado del ejecutable original y recalcula el checksum PE. Comprueba la huella SHA-256 del original, el tamaño disponible, la ausencia de firma Authenticode, el contenido descomprimido y que el código nativo, los metadatos y las bibliotecas no cambien. No requiere recompilar el contenedor de Windows.
 
@@ -45,11 +47,14 @@ Para generar el `.exe`, sustituye exclusivamente el recurso HTML reservado del e
 python3 -m pip install -r requirements-dev.txt
 python3 -m playwright install chromium
 python3 tests/verify.py
+python3 scripts/package.py
 ```
 
 Puede usarse un navegador instalado mediante `CUBO_CHROME=/ruta/al/navegador`. La suite levanta su propio servidor local, usa sesiones temporales y guarda el informe, las capturas y los archivos exportados en `test-results/`. No modifica datos reales del usuario.
 
-Comprueba integridad del código, presencia de los controles originales, equivalencia de estado y píxeles con el original, edición, cámara, giros, captura y flechas, estilos, biblioteca, verificación, descargas reales, bloqueos, ventanas, persistencia y varios tamaños de pantalla.
+Comprueba integridad del código, presencia de los controles originales, equivalencia de estado y píxeles con el original, edición, cámara, giros, captura y flechas, estilos, biblioteca, verificación, descargas reales, bloqueos, ventanas, persistencia y varios tamaños de pantalla. También verifica las opciones por contraste, los límites de los valores directos y el arranque del recurso comprimido con la red desconectada.
+
+`scripts/package.py` actualiza el ZIP, las huellas y el informe de entrega. Exige que las 14 pruebas hayan pasado y que el informe corresponda exactamente al HTML que se empaqueta.
 
 ## Archivos
 
@@ -60,7 +65,9 @@ Comprueba integridad del código, presencia de los controles originales, equival
 | `ui/studio.css` | Sistema visual, distribución y adaptación a pantallas pequeñas. |
 | `ui/studio.js` | Organización de controles y mejoras de presentación. |
 | `scripts/build.py` | Generación reproducible de HTML y ejecutable. |
+| `scripts/package.py` | Empaquetado de una compilación validada y actualización de las huellas. |
 | `tests/verify.py` | Pruebas funcionales y comparación con el original. |
 | `docs/funciones.md` | Inventario y ubicación de funciones. |
 | `docs/validacion.md` | Resultados y alcance de la validación. |
 | `licenses/WebView2.txt` | Aviso de licencia del componente nativo, conservado del original. |
+| `licenses/Manrope-OFL.txt` | Licencia OFL de la fuente variable incluida. |

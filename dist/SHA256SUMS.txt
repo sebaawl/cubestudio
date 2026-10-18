@@ -1,2 +1,2 @@
-a4f4c6c83f93049cf1e84d820bcc04313b50df080d41f058958e7e720af64073  Cubo-Studio-Minimal.exe
-b1dbe78cd933c6cf651f1d368a386107a9194cc94b0a3368c103b730ae619277  Cubo-Studio-Minimal.html
+32e4262f72dab56b146109e2b7140fa9e6f55dde7c932e3bb1b1d5e88ca1d252  Cubo-Studio-Minimal.exe
+d5cb31c01ae40dca913fdd276a4784b32db8bc2a2ad537947c18cfb44deb7710  Cubo-Studio-Minimal.html

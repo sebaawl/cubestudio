@@ -30,8 +30,11 @@ def pe_checksum(data, checksum_offset):
 def main():
     original = (ROOT / "src/original.html").read_text()
     styles = (ROOT / "ui/studio.css").read_text()
+    font = base64.b64encode((ROOT / "ui/manrope-latin-variable.woff2").read_bytes()).decode()
+    styles = styles.replace('url("manrope-latin-variable.woff2")', 'url("data:font/woff2;base64,' + font + '")')
+    styles = '/* Bundled font license:\n' + (ROOT / 'licenses/Manrope-OFL.txt').read_text() + '\n*/\n' + styles
     presentation = (ROOT / "ui/studio.js").read_text()
-    # The native system font keeps this work tool fully usable without Internet.
+    # The bundled variable font keeps this work tool fully usable without Internet.
     html = re.sub(r"@import url\('https://fonts.googleapis.com/[^']+'\);", "", original)
     html = html.replace("</head>", "<style id=\"minimal-studio-styles\">\n" + styles + "\n</style></head>", 1)
     html = html.replace("</body>", "<script id=\"minimal-studio-ui\">\n" + presentation + "\n</script></body>", 1)

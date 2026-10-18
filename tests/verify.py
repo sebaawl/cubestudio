@@ -4,6 +4,8 @@ from pathlib import Path
 from contextlib import contextmanager
 from http.server import ThreadingHTTPServer, SimpleHTTPRequestHandler
 import functools
+import base64
+import gzip
 import hashlib
 import json
 import os
@@ -144,6 +146,7 @@ def main():
                 page.locator('#facePicker').click()
                 page.locator('[data-face-option="4"]').click(); wait_camera(page)
                 require(page.evaluate('state.viewFace') == '4', 'Reference face failed')
+                page.locator('#cameraAdvanced > summary').click()
                 page.locator('#cameraTop').select_option('1')
                 require(page.evaluate('state.cameraTop') == 1, 'Top face failed')
                 page.locator('#canvasFrame').click(); wait_camera(page)
@@ -173,12 +176,13 @@ def main():
                 page.locator('[data-mode=piece]').click()
                 hit(page, 'p.sticker.p.every(v=>Math.abs(v)===1)')
                 require(page.evaluate('stickers.filter(s=>s.visible===false).length') == 3, 'Whole-piece visibility failed')
-                page.locator('#visibilityAction').select_option('solo')
+                page.locator('[data-choice=visibilityAction][data-value=solo]').click()
                 hit(page, 'p.sticker.p.filter(v=>v!==0).length===2')
                 require(page.evaluate('stickers.filter(s=>s.visible!==false).length') == 2, 'Isolate edge failed')
                 page.locator('#outputOptions').click()
-                page.locator('#hiddenOutput').select_option('ghost')
-                input_value(page, '#hiddenAlpha', '.35', 'change')
+                page.locator('[data-choice=hiddenOutput][data-value=ghost]').click()
+                page.locator('#hiddenAlphaDirect').fill('35')
+                page.locator('#hiddenAlphaDirect').press('Enter')
                 require(page.evaluate('state.hiddenMode==="ghost" && state.hiddenAlpha===.35'), 'Hidden output policy failed')
                 close_dialog(page, 'outputDialog')
                 page.locator('#allColors').click()
@@ -202,12 +206,13 @@ def main():
                 require(page.evaluate('Math.abs(state.captureMove.angle)===Math.PI/4'), 'Capture failed')
                 require(page.locator('#captureBar').is_visible(), 'Capture actions unavailable')
                 page.locator('#arrowConfig').click()
-                page.locator('#arrowMode').select_option('3d')
-                page.locator('#arrowPlacement').select_option('manual')
+                page.locator('[data-choice=arrowMode][data-value="3d"]').click()
+                page.locator('[data-choice=arrowPlacement][data-value=manual]').click()
                 input_value(page, '#arrowRotation', '123.5')
-                input_value(page, '#arrowWidth', '10')
+                page.locator('#arrowWidthDirect').fill('10')
+                page.locator('#arrowWidthDirect').press('Enter')
                 page.locator('#arrowLineTab').click()
-                page.locator('#arrowOutline').select_option('edges')
+                page.locator('[data-choice=arrowOutline][data-value=edges]').click()
                 input_value(page, '#arrowOutlineColor', '#334455')
                 require(page.evaluate('state.arrowMode==="3d"&&state.arrowRotation===123.5&&state.arrowOutline==="edges"&&state.arrowOutlineColor==="#334455"'), 'Arrow settings failed')
                 close_dialog(page, 'arrowDialog')
@@ -226,8 +231,9 @@ def main():
         def visual_settings():
             with page_at() as page:
                 page.locator('#tab-style').click()
-                page.locator('#style').select_option('simple')
-                input_value(page, '#width', '2.5')
+                page.locator('[data-choice=style][data-value=simple]').click()
+                page.locator('#widthDirect').fill('2.5')
+                page.locator('#widthDirect').press('Enter')
                 input_value(page, '#ink', '#27312b')
                 require(page.evaluate('state.style==="simple"&&state.width===2.5&&state.ink==="#27312b"'), 'Stroke settings failed')
                 page.locator('#divisions').uncheck()
@@ -237,9 +243,11 @@ def main():
                 require(page.evaluate('state.colors[2]') == '#e99d9b', 'Palette preset failed')
                 input_value(page, '#color2', '#aa3344')
                 page.wait_for_timeout(300)
-                input_value(page, '#opacity', '.65')
+                page.locator('#opacityDirect').fill('65')
+                page.locator('#opacityDirect').press('Enter')
                 input_value(page, '#background', '#f0eee7')
-                input_value(page, '#bgOpacity', '.4')
+                page.locator('#bgOpacityDirect').fill('40')
+                page.locator('#bgOpacityDirect').press('Enter')
                 require(page.evaluate('state.colors[2]==="#aa3344"&&state.opacity===.65&&state.bgOpacity===.4'), 'Color and opacity failed')
                 page.locator('#mobileOptions').click()
                 input_value(page, '#viewerColor', '#eeeecc')
@@ -251,7 +259,8 @@ def main():
         def export_files():
             with page_at() as page:
                 page.locator('#openExport').click()
-                page.locator('#resolution').select_option('1024')
+                page.locator('[data-choice=resolution][data-value="1024"]').click()
+                page.locator('#exportAdvanced > summary').click()
                 page.locator('#autoFilename').uncheck()
                 page.locator('#exportName').fill('Prueba de cubo')
                 with page.expect_download() as png_download:
@@ -359,6 +368,58 @@ def main():
                 require(not page.locator('#resetMenu').is_visible(), 'Reset menu did not close on Escape')
         record('Themes persist; locks, floating panels, focus, shortcuts and reset menu work', environment)
 
+        def open_controls():
+            with page_at() as page:
+                require(page.locator('#cameraAdvanced').get_attribute('open') is None, 'Advanced camera options should start collapsed')
+                require(page.locator('#stage').evaluate('(el)=>getComputedStyle(el).borderTopWidth') == '0px', 'Canvas still has a frame')
+                require(page.locator('#stage').evaluate('(el)=>getComputedStyle(el).backgroundImage') == 'none', 'Canvas should start without checkerboard')
+                page.locator('#iso').click();wait_camera(page)
+                require(page.locator('#iso').get_attribute('aria-pressed') == 'true', 'Selected view lacks feedback')
+                page.locator('#toggleGrid').click()
+                page.reload(wait_until='networkidle')
+                require(page.locator('#toggleGrid').get_attribute('aria-pressed') == 'true', 'Viewer grid preference did not persist')
+                page.locator('#tab-style').click()
+                page.locator('[data-choice=style][data-value=simple]').click()
+                field=page.locator('#widthDirect').locator('..')
+                field.locator('button').last.click()
+                require(page.evaluate('state.width') == 4.5, 'Direct increment failed')
+                page.locator('#widthDirect').fill('99');page.locator('#widthDirect').press('Enter')
+                require(page.evaluate('state.width') == 12, 'Direct input did not respect maximum')
+                page.locator('#widthDirect').fill('0');page.locator('#widthDirect').press('Enter')
+                require(page.evaluate('state.width') == .5, 'Direct input did not respect minimum')
+                page.locator('[data-choice=style][data-value=solid]').click()
+                require(page.locator('#widthDirect').is_disabled(), 'Solid style did not disable outline controls')
+                page.evaluate('setLock("appearance",true)')
+                require(page.locator('[data-choice=style]').evaluate_all('(els)=>els.every(e=>e.disabled)'), 'Choice buttons bypass the group lock')
+        record('Open controls: selection contrast, numeric bounds, disabled states and persistent grid', open_controls)
+
+        def native_offline():
+            exe=(ROOT/'dist/Cubo-Studio-Minimal.exe').read_bytes()
+            offset=exe.index(b'<!doctype html>')
+            size=struct.unpack_from('<I',exe,offset-4)[0]
+            resource=exe[offset:offset+size]
+            encoded=re.search(rb'atob\("([A-Za-z0-9+/=]+)"\)',resource)[1]
+            require(gzip.decompress(base64.b64decode(encoded)) == (ROOT/'index.html').read_bytes(), 'Executable contains a different app')
+            wrapper=RESULTS/'native-wrapper.html';wrapper.write_bytes(resource)
+            context=browser.new_context(viewport={'width':1280,'height':800},offline=True)
+            page=context.new_page();page.on('pageerror',lambda e:errors.append(str(e)))
+            document_url=base+'/offline-native-wrapper.html'
+            context.route('**/*',lambda route:route.fulfill(status=200,content_type='text/html; charset=utf-8',body=resource) if route.request.url==document_url else route.abort())
+            requests=[];page.on('request',lambda req:requests.append(req.url))
+            try:
+                page.goto(document_url,wait_until='networkidle')
+                page.wait_for_selector('html.open-studio')
+                page.evaluate('document.fonts.ready')
+                require(page.evaluate('document.fonts.check("12px Manrope")'), 'Bundled font did not load offline')
+                page.locator('[data-mode=turn]').click()
+                before=page.evaluate('JSON.stringify(stickers)')
+                page.locator('#moves button').filter(has_text=re.compile('^R$')).click()
+                require(page.evaluate('JSON.stringify(stickers)') != before, 'Compressed native resource did not run offline')
+                require(not any(url.startswith(('http:','https:')) and url!=document_url for url in requests), 'Standalone app depends on remote resources')
+            finally:
+                context.close()
+        record('Actual compressed executable resource boots and edits offline with its bundled font', native_offline)
+
         def responsive():
             for width, height in [(1440,1000),(1280,720),(1024,768),(760,820),(390,844),(320,720)]:
                 with page_at(width=width, height=height) as page:
@@ -369,7 +430,7 @@ def main():
                     require(bounds['height']>100 and bounds['width']>200, f'Canvas collapsed at {width}')
                     quick=page.locator('#selectCameraFaces').bounding_box()
                     reference=page.locator('#facePicker').bounding_box()
-                    require(quick['y']+quick['height']<=reference['y'], f'Camera controls overlap at {width}')
+                    require(quick['y']+quick['height']<=reference['y'] or reference['y']+reference['height']<=quick['y'], f'Camera controls overlap at {width}')
                     page.wait_for_timeout(200)
                     page.screenshot(path=str(RESULTS/f'editor-{width}.png'), full_page=True)
                     for tool in ['paint','tile','piece','turn']:
@@ -383,7 +444,7 @@ def main():
         record('No browser JavaScript errors during all checks', lambda: require(not errors, '\n'.join(errors)))
         browser.close()
     server.shutdown()
-    summary = {'passed': sum(c['status']=='passed' for c in checks), 'failed': sum(c['status']=='failed' for c in checks), 'checks': checks, 'browser_errors': errors}
+    summary = {'passed': sum(c['status']=='passed' for c in checks), 'failed': sum(c['status']=='failed' for c in checks), 'app_sha256':hashlib.sha256((ROOT/'index.html').read_bytes()).hexdigest(), 'checks': checks, 'browser_errors': errors}
     (RESULTS/'report.json').write_text(json.dumps(summary, ensure_ascii=False, indent=2))
     print(json.dumps({'passed':summary['passed'],'failed':summary['failed']}, ensure_ascii=False))
     raise SystemExit(1 if summary['failed'] else 0)
